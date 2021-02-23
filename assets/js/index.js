@@ -7,7 +7,8 @@ const startVideo = () => {
             if (Array.isArray(devices)) {
                 devices.forEach(device => {
                     if (device.kind === 'videoinput'){
-                        if (device.label.includes('')){
+                        if (device.label.includes('USB2.0')){
+                            console.log(devices)
                             navigator.getUserMedia(
                                 { video: {
                                     deviceId: device.deviceId
@@ -51,9 +52,9 @@ cam.addEventListener('play', async () => {
         faceapi.draw.drawFaceLandmarks(canvas, resizedDetection)
         faceapi.draw.drawFaceExpressions(canvas, resizedDetection)
         resizedDetection.forEach(detection => {
-            const { age, gender, genderProbability } = detection
+            const { age, ageProbability, gender, genderProbability } = detection
             new faceapi.draw.DrawTextField([
-                `${parseInt(age, 10)} anos`,
+                `${parseInt(age, 10)} anos - ${ageProbability * 100, 10}%`,
                 `${gender} - ${parseInt(genderProbability * 100, 10)}%`
             ], detection.detection.box.topRight).draw(canvas)
         })
